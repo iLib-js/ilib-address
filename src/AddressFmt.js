@@ -395,11 +395,12 @@ class AddressFmt {
      *
      * @param {Locale|string=} locale the locale to translate the labels
      * to. If not given, the locale of the formatter will be used.
+     * @param {boolean} isSync whether to load the info synchronously or not, defaults to false.
      * @returns {Promise} a promise to load the requested info
      * @accept {Array.<Object>} An array of rows of address components
      * @reject {undefined} No info available or info could not be loaded
      */
-    getFormatInfo(locale) {
+    getFormatInfo(locale, isSync = false) {
         var info;
         var loc = new Locale(this.locale);
         if (locale) {
@@ -425,13 +426,13 @@ class AddressFmt {
 
         const locData = getLocaleData({
             path: locdir,
-            sync: false
+            sync: isSync
         });
 
         return locData.loadData({
             basename: "regionnames",
             locale: loc,
-            sync: false,
+            sync: isSync,
             mostSpecific: true
         }).then((regions) => {
             this.regions = regions;
@@ -445,7 +446,7 @@ class AddressFmt {
             return locData.loadData({
                 basename: "ctrynames",
                 locale: loc,
-                sync: false,
+                sync: isSync,
                 mostSpecific: true
             })
          }).then((ctrynames) => {
