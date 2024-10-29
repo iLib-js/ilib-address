@@ -1,5 +1,5 @@
 VERSION=$(node -v | sed 's/v//' | sed 's/\..*//')
-if [ $VERSION -lt 12 ]
+if [ $VERSION -lt 16 ]
 then
     # testing under commonjs by transpiling with babel first
     echo node test/testSuite.cjs
